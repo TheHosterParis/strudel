@@ -1,0 +1,12 @@
+$: s("[bd <hh oh>]*2").bank("tr909").dec(.4)
+$: s("[hh hh bd <hh oh>]*2").bank("tr909").dec(.4)
+const SYNTH_LPF = slider(700, 700, 50000)
+const DELAY = slider(0,0,1)
+
+//kick
+const Multiplier = slider(1,1,8)
+$: s("[<cp*16 cp*4>]").bank("tr909").dec(.4)
+//bass
+// $: s("[cp sd <sd cp> cp cp]*2").bank("tr909").dec(.4).delay(DELAY).lpf(SYNTH_LPF)._scope()//const PITCH_SLIDER = slider(0,0,100)
+$: note("<[c,eb,g]!2 [c,f,ab] [d,f,ab]>")
+.arp("0 [0,2] 1 [0,2]")
