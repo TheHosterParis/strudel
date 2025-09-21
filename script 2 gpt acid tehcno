@@ -1,0 +1,42 @@
+// On peut charger des samples externes si besoin, mais ici on utilise les samples/drum machines par défaut
+
+//setcpm(125)  // tempo, cycles per minute (≈ BPM) :contentReference[oaicite:1]{index=1}
+
+// Partie percussions : kick / snare / clap / hi-hats
+$: sound("bd bd bd bd")        // Kick lourd à chaque temps :contentReference[oaicite:2]{index=2}
+  .bank("RolandTR909")       // Utiliser la TR909 pour les kicks/snare/hats :contentReference[oaicite:3]{index=3}
+
+$: sound("~ sd ~ sd")          // Snare (sd = snare drum) sur les 2 & 4 temps, avec silences ≈ don’t play sur autres temps :contentReference[oaicite:4]{index=4}
+  .bank("RolandTR909")
+
+$: sound("<[cp ~ cp ~ cp ~ cp ~] [cp*8]>") // Clap (cp), avec espace pour le rythme, simple répétition every autre temps :contentReference[oaicite:5]{index=5}
+  .bank("RolandTR707")
+
+$: sound("hh*8")                // Hi-hats fermés rapides
+  .bank("RolandTR909")
+  .speed("1 1.5 0.8 1.2 1 1.5 0.8 1.2")  // variation de vitesse pour swing léger :contentReference[oaicite:6]{index=6}
+
+// Ligne acide (basse synthétisée ou note sample si tu as un sample TB‑303)
+$: note("c2 ~ d2 ~ eb2 ~ c2 ~")  
+  .s("sawtooth")       // onde de base (tu peux remplacer par un synth qui imite le TB‑303 si tu as) :contentReference[oaicite:7]{index=7}
+  .cutoff("500 800 900 600")   // modulation de cut off pour effet acid :contentReference[oaicite:8]{index=8}
+  .resonance(0.9)      // forte résonance pour donner le caractère acid
+  .gain(0.6)
+
+// Mélodie simple & répétitive
+$: note("g3 f3 g3 bb3")      
+  .s("triangle")       // synth plus doux pour mélodie
+  .delay(0.5)          // effet de délai
+  .gain(0.3)
+
+// Variation/glitch / accent “acid” toutes les 4 mesures
+// On peut utiliser un pattern conditionnel : ici on va intercaler un accent de cutoff sur la ligne acide
+$: note("c2 ~ d2 ~ eb2 ~ c2 ~")
+  .s("sawtooth")
+  .cutoff("<500 500 800 800>")   // les deux premiers cycles, cutoff bas, sur les deux suivants cutoff haut => effet de montée/alternance
+  .resonance(0.9)
+  .gain(0.6)
+
+// On peut superposer / jouer en parallèle les patterns avec `$:` syntaxe si besoin :contentReference[oaicite:9]{index=9}
+$: sound("bd ~ sd ~ bd ~ sd ~").bank("RolandTR909")
+$: note("g3 ~ bb3 ~ g3 ~ f3 ~").s("triangle").delay(0.25).gain(0.4)
