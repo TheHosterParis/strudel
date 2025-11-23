@@ -1,0 +1,15 @@
+$: note("<g1 bb1 d2 f1>").layer(
+x=>x.s("sawtooth").vib(4),
+x=>x.s("square").add(note(12))
+)._scope()
+
+samples('github:yaxu/clean-breaks')
+$: s("amen/4").fit().chop(32)
+
+// $: s("bd oh hh bd bd bd - bd").bank('RolandTR909')
+// $: s("oh - oh - oh - oh hh").bank('RolandTR808')
+// $: s("oh - oh - oh - oh hh").bank('RolandTR808')
+// $: s("<cp!4 hh!2 oh*2>!2" ).bank('dmx')
+$: s(`bd*2, - cp, 
+- - - oh, [hh*4 hh*2],
+[- casio]*2`).bank('dmx')
