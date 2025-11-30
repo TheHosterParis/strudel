@@ -1,0 +1,38 @@
+
+
+  // stack(
+  //   s("[hh*4 oh*4]").bank("rolandtr909"),
+  //   s("oh*2").bank("rolandtr909"),
+  //   s("bd!4 md").cutoff(rand.range(500,8000)).mask(),
+  //   s("bd!4 md").lpf("1000:0 1000:10 1000:20 1000:30").mask(),
+  // )
+
+
+// 16-track techno stack for strudel.cc
+// Darker, punchier, more driving patterns
+const kickOn = 0;
+const kickSlider = slider(0.918,0,1);
+const distKickOn = 1;
+const distKickSlider = slider(0.918,0,1);
+const midKickOn = 1;
+const midKickSlider = slider(0.918,0,1);
+const clapGainSlider = slider(0.568,0,1);
+const clapOn = 1;
+stack(
+  // 1 Kick
+  s("bd!4").bank("rolandtr909").postgain(kickOn?1:0)._scope(),
+  // 2 Kick distortion layer
+    s("bd!4").bank("rolandtr909").distort(0.4).postgain(distKickOn?kickSlider:0)._scope(),
+  // 3 Mid-kick / low-mid punch
+  s("md*2 ~ md*2").bank("rolandtr909").postgain(midKickOn?1:0)._scope(),
+  // 4 Snare
+  s("sd [~ sd]").bank("rolandtr909").gain(slider(0,7,0,1)),
+  // 5 Main closed hats
+  s("hh*8").bank("rolandtr909").gain(0.6),
+  // 6 Extra shuffled hats
+  s("hh [~ hh] hh [hh ~]").bank("rolandtr909").gain(0.45),
+  // 7 Open hats offbeat
+  s("oh ~ oh ~").bank("rolandtr909").gain(0.55),
+  // 9 Clap
+  s("~ cp ~ cp").bank("rolandtr909").postgain(clapOn?clapSlider:0)._scope(),
+)
